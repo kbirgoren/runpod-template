@@ -21,7 +21,7 @@ accelerate launch train_dreambooth.py \
 	--lr_warmup_steps=0 \
 	--num_class_images=50 \
 	--sample_batch_size=4 \
-	--max_train_steps=800 \
+	--max_train_steps=1100 \
 	--save_interval=10000 \
 	--save_sample_prompt=$save_sampl_prompt \
 	--concepts_list="concepts_list.json"
