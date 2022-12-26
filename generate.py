@@ -17,7 +17,7 @@ if torch.cuda.is_available():
 print("Setting cuda alloc_conf")
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
 
-model_id = "./trained/800"
+model_id = "./trained/1100"
 
 
 print("Setting pipeline")
@@ -31,7 +31,7 @@ print("Running pipeline")
 pipeline = pipeline.to("cuda")
 
 
-prompt = "portrait of kurtulusbirgoren, a vintage, realistic, super sharp, realistic, portrait of kurtulusbirgoren, shallow depth of field, by edward c. curtis"
+prompt = "formal portrait of kurtulusbirgoren as doc brown from back to the future. digital art by eugene de blaas, ross tran, and nasreddine dinet, vibrant color scheme, intricately detailed, in the style of romanticism, cinematic, artstation, greg rutkowski "
 
 for x in range(50):
     print("Generating image")
