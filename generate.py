@@ -17,7 +17,8 @@ if torch.cuda.is_available():
 print("Setting cuda alloc_conf")
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
 
-model_id = "runwayml/stable-diffusion-v1-5"
+# model_id = "runwayml/stable-diffusion-v1-5"
+model_id = "./kurtulusbirgoren/1100"
 
 
 print("Setting pipeline")
