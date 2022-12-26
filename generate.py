@@ -17,8 +17,7 @@ if torch.cuda.is_available():
 print("Setting cuda alloc_conf")
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
 
-# model_id = "runwayml/stable-diffusion-v1-5"
-model_id = "./kurtulusbirgoren/1100"
+model_id = "./trained/800"
 
 
 print("Setting pipeline")
@@ -34,7 +33,7 @@ pipeline = pipeline.to("cuda")
 
 prompt = "portrait of kurtulusbirgoren, a vintage, realistic, super sharp, realistic, portrait of kurtulusbirgoren, shallow depth of field, by edward c. curtis"
 
-for x in range(1):
+for x in range(50):
     print("Generating image")
     now = str(int(time.time()))
     image = pipeline(prompt,
