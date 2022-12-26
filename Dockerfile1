@@ -1,0 +1,10 @@
+FROM continuumio/anaconda3:latest
+
+RUN conda config --append channels conda-forge
+RUN conda install -y cudatoolkit
+# RUN conda install -y libgcc gmp
+RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
+RUN pip install git+https://github.com/ShivamShrirao/diffusers
+RUN pip install accelerate==0.12.0 transformers ftfy bitsandbytes gradio natsort
+
+CMD ["bash"]
