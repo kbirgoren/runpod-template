@@ -1,2 +1,3 @@
 output/*.png
-trained/*/
+trained/*
+__pycache__/*

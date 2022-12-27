@@ -1,6 +1,6 @@
 pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5"
 pretrained_vae_name_or_path="stabilityai/sd-vae-ft-mse"
-output_dir="trained" 
+output_dir="models" 
 save_sample_prompt="photo of kurtulusbirgoren"
 
 accelerate launch train_dreambooth.py \

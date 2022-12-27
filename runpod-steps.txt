@@ -1,0 +1,76 @@
+# install sudo
+
+apt-get update
+apt-get install apt-utils
+apt-get install sudo
+apt-get install git
+apt-get install software-properties-common
+
+add-apt-repository ppa:ubuntu-toolchain-r/test
+apt-get update
+apt-get upgrade
+apt-get install libstdc++6
+
+
+# install pyenv
+
+apt-get update; apt-get install make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+(Region secmek icin 2 tane soru soruyor cevabi 8 ve 1)
+
+curl https://pyenv.run | bash
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+exec $SHELL
+
+pyenv install 3.9
+
+pyenv global 3.9
+
+pyenv versions
+
+# install conda
+
+wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+
+sh Anaconda3-2022.10-Linux-x86_64.sh
+
+source /root/.bashrc
+
+conda install -y cudatoolkit
+
+conda install libgcc gmp
+
+# install pytorch
+
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
+
+
+# install requirements
+
+pip install git+https://github.com/ShivamShrirao/diffusers
+pip install -U --pre triton
+pip install accelerate==0.12.0 transformers ftfy bitsandbytes gradio natsort
+
+
+# create stable diffusion folder
+
+git clone https://github.com/kbirgoren/runpod-template.git
+
+chmod -R 777 runpod-template/
+cd runpod-template
+chmod -R 777 trained/
+chmod -R 777 output/
+
+# train example
+
+sh train.sh
+
+
+
+
+

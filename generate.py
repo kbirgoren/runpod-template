@@ -1,46 +1,87 @@
 import torch
+from diffusers import DDIMScheduler, StableDiffusionPipeline
+from utils import timestamp_as_string
 import os
-from diffusers import StableDiffusionPipeline, DDIMScheduler
-from re import sub
-import time
+import argparse
 
 
-def camel_case(s):
-    s = sub(r"(_|-)+", " ", s).title().replace(" ",
-                                               "").replace(",", "").replace("(", "").replace(")", "")
-    return ''.join([s[0].lower(), s[1:]])
+def parse_args(input_args=None):
+    parser = argparse.ArgumentParser(
+        description="Simple example of a training script.")
+    parser.add_argument(
+        "--total_image",
+        type=str,
+        default=None,
+        required=True,
+        help="Total image that you want to generate.",
+    )
+    parser.add_argument(
+        "--prompt",
+        type=str,
+        default=None,
+        required=True,
+        help="Prompt to generate image",
+    )
+    parser.add_argument(
+        "--model_id",
+        type=str,
+        default='runwayml/stable-diffusion-v1-5',
+        required=False,
+        help="Model id to be used in generation",
+    )
+    if input_args is not None:
+        args = parser.parse_args(input_args)
+    else:
+        args = parser.parse_args()
+
+    env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
+    if env_local_rank != -1 and env_local_rank != args.local_rank:
+        args.local_rank = env_local_rank
+
+    return args
 
 
-if torch.cuda.is_available():
-    print("Cuda is available")
+def main(args):
+    total_image = args.total_image
+    prompt = args.prompt
+    model_id = args.model_id
 
-print("Setting cuda alloc_conf")
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        print("Cuda is available")
 
-model_id = "./trained/1100"
+    print("Setting pipeline")
+    pipe = StableDiffusionPipeline.from_pretrained(
+        model_id,
+        torch_dtype=torch.float16)
 
+    print("Setting scheduler")
+    pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
 
-print("Setting pipeline")
-pipeline = StableDiffusionPipeline.from_pretrained(
-    model_id, torch_dtype=torch.float16)
+    print("Running pipeline")
+    pipe = pipe.to("cuda")
 
-print("Setting scheduler")
-pipeline.scheduler = DDIMScheduler.from_config(pipeline.scheduler.config)
+    generated_images = []
 
-print("Running pipeline")
-pipeline = pipeline.to("cuda")
+    for i in range(int(total_image)):
 
+        current_str = str(i+1)
+        total_str = str(total_image)
 
-prompt = "formal portrait of kurtulusbirgoren as doc brown from back to the future. digital art by eugene de blaas, ross tran, and nasreddine dinet, vibrant color scheme, intricately detailed, in the style of romanticism, cinematic, artstation, greg rutkowski "
+        print("Generating image " + current_str + "/" + total_str + "")
 
-for x in range(50):
-    print("Generating image")
-    now = str(int(time.time()))
-    image = pipeline(prompt,
+        now = timestamp_as_string()
+        filename = now + "-" + str(i) + ".png"
+
+        image = pipe(prompt,
                      height=512,
                      width=512,
                      guidance_scale=7.5,
                      num_inference_steps=20).images[0]
+        image.save("output/" + filename)
+        generated_images.append(filename)
 
-    filename = "kurtulusbirgoren"
-    image.save("output/" + filename + "-" + now + "-"+str(x)+".png")
+
+if __name__ == "__main__":
+    args = parse_args()
+    main(args)
