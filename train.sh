@@ -1,7 +1,7 @@
 pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5"
 pretrained_vae_name_or_path="stabilityai/sd-vae-ft-mse"
-output_dir="models" 
-save_sample_prompt="photo of kurtulusbirgoren"
+output_dir="models/cagrisinci" 
+save_sample_prompt="photo of cagrisinci"
 
 accelerate launch train_dreambooth.py \
 	--pretrained_model_name_or_path=$pretrained_model_name_or_path \
@@ -23,5 +23,5 @@ accelerate launch train_dreambooth.py \
 	--sample_batch_size=4 \
 	--max_train_steps=1100 \
 	--save_interval=10000 \
-	--save_sample_prompt=$save_sampl_prompt \
+	--save_sample_prompt=$save_sample_prompt \
 	--concepts_list="concepts_list.json"
