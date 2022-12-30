@@ -52,7 +52,7 @@ def main(args):
     total_images = args.total_images
     prompt = args.prompt
     model_id = args.model_id
-    negative_prompt = args.prompt
+    negative_prompt = args.negative_prompt
 
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
