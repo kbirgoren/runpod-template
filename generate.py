@@ -7,9 +7,9 @@ import argparse
 
 def parse_args(input_args=None):
     parser = argparse.ArgumentParser(
-        description="Simple example of a training script.")
+        description="Simple example of a generation script.")
     parser.add_argument(
-        "--total_image",
+        "--total_images",
         type=str,
         default=None,
         required=True,
@@ -21,6 +21,13 @@ def parse_args(input_args=None):
         default=None,
         required=True,
         help="Prompt to generate image",
+    )
+    parser.add_argument(
+        "--negative-prompt",
+        type=str,
+        default=None,
+        required=False,
+        help="Negative prompt to generate image",
     )
     parser.add_argument(
         "--model_id",
@@ -45,6 +52,7 @@ def main(args):
     total_image = args.total_image
     prompt = args.prompt
     model_id = args.model_id
+    negative_prompt = args.prompt
 
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
@@ -74,6 +82,7 @@ def main(args):
         filename = now + "-" + str(i) + ".png"
 
         image = pipe(prompt,
+                     negative_prompt,
                      height=512,
                      width=512,
                      guidance_scale=7.5,
