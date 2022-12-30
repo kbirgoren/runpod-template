@@ -23,7 +23,7 @@ def parse_args(input_args=None):
         help="Prompt to generate image",
     )
     parser.add_argument(
-        "--negative-prompt",
+        "--negative_prompt",
         type=str,
         default=None,
         required=False,
