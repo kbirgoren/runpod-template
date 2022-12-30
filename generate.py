@@ -49,7 +49,7 @@ def parse_args(input_args=None):
 
 
 def main(args):
-    total_images = args.total_image
+    total_images = args.total_images
     prompt = args.prompt
     model_id = args.model_id
     negative_prompt = args.prompt
