@@ -49,7 +49,7 @@ def parse_args(input_args=None):
 
 
 def main(args):
-    total_image = args.total_image
+    total_images = args.total_image
     prompt = args.prompt
     model_id = args.model_id
     negative_prompt = args.prompt
@@ -71,10 +71,10 @@ def main(args):
 
     generated_images = []
 
-    for i in range(int(total_image)):
+    for i in range(int(total_images)):
 
         current_str = str(i+1)
-        total_str = str(total_image)
+        total_str = str(total_images)
 
         print("Generating image " + current_str + "/" + total_str + "")
 
