@@ -81,8 +81,8 @@ def main(args):
         now = timestamp_as_string()
         filename = now + "-" + str(i) + ".png"
 
-        image = pipe(prompt,
-                     negative_prompt,
+        image = pipe(prompt=prompt,
+                     negative_prompt=negative_prompt,
                      height=512,
                      width=512,
                      guidance_scale=7.5,
