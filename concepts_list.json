@@ -4,5 +4,11 @@
     "class_prompt": "photo of a man",
     "instance_data_dir": "./train_data/maliabbasoglu",
     "class_data_dir": "./train_data/man"
+  },
+  {
+    "instance_prompt": "photo of kurtulusbirgoren",
+    "class_prompt": "photo of a man",
+    "instance_data_dir": "./train_data/kurtulusbirgoren",
+    "class_data_dir": "./train_data/man"
   }
 ]
